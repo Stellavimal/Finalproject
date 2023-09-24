@@ -1,20 +1,11 @@
-import {
-    Nav,
-    NavLogo,
-    NavLink,
-    Bars,
-    NavMenu,
-    NavBtn,
-    NavBtnLink,
-} from "./navelement";
-
+import {Nav,NavLogo,NavLink,Bars,NavMenu,NavBtn,NavBtnLink,}from "./navelement";
 
 const Navbar = () => {
     return (
         <>
 <Nav>
 <NavLogo to="/">
-	Logo
+Election Management System
 </NavLogo>
 <Bars />
 
