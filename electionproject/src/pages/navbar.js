@@ -1,11 +1,12 @@
 import {Nav,NavLogo,NavLink,Bars,NavMenu,NavBtn,NavBtnLink,}from "./navelement";
+import './test.css'
 
 const Navbar = () => {
     return (
         <>
 <Nav>
 <NavLogo to="/">
-Election Management System
+<p className="glow-text">Election Management System</p>
 </NavLogo>
 <Bars />
 
