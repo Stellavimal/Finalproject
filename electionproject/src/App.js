@@ -5,12 +5,16 @@ import Home from './pages/home'
 import Login from './pages/login'
 import Navbar from './pages/navbar'
 import Addelection from './pages/election';
+import Candidate from './pages/candidate';
+import Addparty from './pages/party';
 // import Products from './pages/Products'
 // import Blog from './pages/Blog'
 function App() {
   return (
     <>
-    <Addelection/>
+    <Addparty/>
+    {/* <Candidate/> */}
+    {/* <Addelection/> */}
       {/* <BrowserRouter>
       <Navbar />
       <Routes>

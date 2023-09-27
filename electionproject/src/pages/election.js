@@ -12,6 +12,7 @@ const Addelection = () => {
         setelection([...election, response.data])
         setaddelection({ electionname: "", electiondate: "", electiontype: "", starttime: "", endtime: "" })
         console.log("response:", response.data)
+        alert("New Election added")
     }
     // const getdata=async()=>{
     //     const response1= await axios.get('/api/addelection/');
@@ -56,7 +57,7 @@ const Addelection = () => {
             <label>End Time:</label>
             <input type="time" placeholder="Enter Time" name='endtime' className="form-group mx-sm-3 mb-2" value={addnewelection.endtime} onChange={input} required /><br />
             {/* <Button type="submit" onClick={getdata}>get</Button> */}
-            <Button variant="primary" onClick={adddata}>Submit</Button>
+            <Button variant="success" onClick={adddata}>Submit</Button>
         </form>
 
 
