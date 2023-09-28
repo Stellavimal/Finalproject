@@ -10,18 +10,33 @@ import Addparty from './pages/party';
 import Viewcandidate from './pages/viewcandidate';
 import AdminNavbar from './pages/adminhome';
 import Viewvotersdetails from './pages/viewvoter';
+import Voters from './pages/voters';
 function App() {
+  // function PrivateRoute({children}){   // use can component also
+  //   let value =true;
+  
+  //   if (!value)
+  //   {
+  //     return <Navigate to='/taskpage/login' />
+  //   } 
+  //   else
+  //   {
+  //     return children
+  //   }
+  // }
   return (
     <>
-
+     
       {/*  */}
       {/* <Candidate/>
-      {/*  */}
-      <BrowserRouter>
-        {/* <Navbar />  */}
-        <AdminNavbar />
+      // {/*  */}
+       <BrowserRouter> 
+        <Navbar />
+         {/* <AdminNavbar /> */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={ <Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Voters/>} />
           <Route path="/election" element={<Addelection />} />
           <Route path="/viewcandidate" element={<Viewcandidate />} />
           <Route path="/addparty" element={<Addparty />} />

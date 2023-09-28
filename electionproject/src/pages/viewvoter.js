@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Table } from 'react-bootstrap';
+import Footer from "./footer";
 
 const Viewvotersdetails = () => {
     const [values, setValue] = useState([])
@@ -19,7 +20,9 @@ const Viewvotersdetails = () => {
         fetchData();
     }, []);
 
-    return (<div className='p-5'>
+    return (
+    <>
+    <div className='p-5'>
         <Table striped bordered hover variant='success'>
             <thead>
                 <tr>
@@ -52,7 +55,10 @@ const Viewvotersdetails = () => {
              
             </tbody>
         </Table>
-    </div>);
+    </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <Footer/>
+    </>
+    );
 }
  
 export default Viewvotersdetails;

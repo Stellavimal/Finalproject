@@ -5,9 +5,9 @@ const Navbar = () => {
     return (
         <>
 <Nav>
-<NavLogo to="/">
+
 <p className="glow-text">Election Management System</p>
-</NavLogo>
+
 <Bars />
 
 <NavMenu>
@@ -15,22 +15,22 @@ const Navbar = () => {
 	  to="/"
 	  activeStyle={{ color:'black' }}
 	>
-		Home
+		<b>Home</b>
 	</NavLink>
 	
 	<NavLink 
 	  to="/login"
 	  activeStyle={{ color: 'black' }}
 	>
-		Login
+		<b>New Voters</b>
 	</NavLink>
-	{/* <NavLink 
+	 <NavLink 
 	  to="/contact" 
 	  activeStyle={{ color: 'black' }}
 	>
-		Contact
+		Login
 	</NavLink>
-	<NavLink
+	{/*<NavLink
 	  to="/signin"
 	  activeStyle={{ color: 'black' }}
 	>

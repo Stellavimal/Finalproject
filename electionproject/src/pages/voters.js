@@ -1,4 +1,6 @@
 const Voters = () => {
+    
+
     return (<>
         <form>
             <label><b> Name:</b></label>

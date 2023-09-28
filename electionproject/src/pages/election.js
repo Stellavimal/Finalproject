@@ -1,12 +1,17 @@
 import axios from 'axios';
-import { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { useState,useEffect } from 'react';
+import { Button, Modal,Table } from 'react-bootstrap';
+import Footer from './footer'
 
 const Addelection = () => {
     const [election, setelection] = useState([])
     const [addnewelection, setaddelection] = useState({ electionname: "", electiondate: "", electiontype: "", starttime: "", endtime: "", })
     const [validationError, setValidationError] = useState('');
-
+    const [showModal, setShowModal] = useState(false); // pop up wondow
+    const [values, setValue] = useState([])
+    const toggleTable = () => {
+        setShowModal(!showModal); // Toggle the showTable state
+      };
     const adddata = async () => {
         const response = await axios.post('/api/addelection/', addnewelection);
         setelection([...election, response.data])
@@ -14,10 +19,19 @@ const Addelection = () => {
         console.log("response:", response.data)
         alert("New Election added")
     }
-    // const getdata=async()=>{
-    //     const response1= await axios.get('/api/addelection/');
-    //     console.log("response:",response1.data)
-    // }
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get('/api/addelection/');
+                setValue(response.data);
+                console.log(response.data)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        fetchData();
+    }, []);
     const input = (event) => {
         const { name, value } = event.target;
         setaddelection({ ...addnewelection, [name]: value });
@@ -35,30 +49,93 @@ const Addelection = () => {
     const haandleSubmit = (event) => {
         event.preventDefault()
     }
-  
+
     const isValid = isStartTimeLessThanEndTime();
-    
+
     return (<>
         {!isValid && <p style={{ color: 'red' }}>Start time must be less than End time.</p>}
-        {validationError && <p style={{ color: 'red' }}>{validationError}</p>}
-        <form style={{ textAlign: 'center' }} onSubmit={haandleSubmit}>
-            <label>Election Name:</label>
-            <input type="text" className="form-group mx-sm-3 mb-2" placeholder="Election Name" name='electionname' value={addnewelection.electionname} onChange={input} required /><br />
-            <label>Eelection Date:</label>
-            <input type="date" className="form-group mx-sm-3 mb-2" placeholder="Election Date" name='electiondate' value={addnewelection.electiondate} onChange={input} required /><br />
-            <label>Election Type:</label>
-            <select required name='electiontype' value={addnewelection.electiontype} onChange={input} className="form-group mx-sm-3 mb-2">
-                <option value="" disabled selected>--select Election Type--</option>
-                <option value="GeneralElection">General Election</option>
-                <option value="By-Election">By-Election</option>
-            </select><br />
-            <label>Start Time:</label>
-            <input type="time" placeholder="Enter Time" name='starttime' className="form-group mx-sm-3 mb-2" value={addnewelection.starttime} onChange={input} required /><br />
-            <label>End Time:</label>
-            <input type="time" placeholder="Enter Time" name='endtime' className="form-group mx-sm-3 mb-2" value={addnewelection.endtime} onChange={input} required /><br />
-            {/* <Button type="submit" onClick={getdata}>get</Button> */}
-            <Button variant="success" onClick={adddata}>Submit</Button>
-        </form>
+        {validationError && <p style={{ color: 'red' }}>{validationError}</p>}<br />
+        <Button variant='primary' onClick={toggleTable}> <i className="fas fa-eye">   Previous Elections</i></Button><br />
+        
+        <div class="container">
+            <form style={{ textAlign: 'center' }} onSubmit={haandleSubmit}>
+                <div className="row">
+                    <div className="col-25">
+                        <label for="fname">Election Name</label>
+                    </div>
+                    <div className="col-75">
+                        <input type="text" className="form-group mx-sm-3 mb-2" placeholder="Election Name" name='electionname' value={addnewelection.electionname} onChange={input} required /><br />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-25">
+                        <label>Eelection Date:</label>
+                    </div>
+                    <div className="col-75">
+                        <input type="date" className="form-group mx-sm-3 mb-2" placeholder="Election Date" name='electiondate' value={addnewelection.electiondate} onChange={input} required /><br />
+                    </div></div>
+                <div className="row">
+                    <div className="col-25">
+                        <label>Election Type:</label>
+                    </div>
+                    <div className="col-75">
+                        <select required name='electiontype' value={addnewelection.electiontype} onChange={input} className="form-group mx-sm-3 mb-2">
+                            <option value="" disabled selected>--select Election Type--</option>
+                            <option value="GeneralElection">General Election</option>
+                            <option value="By-Election">By-Election</option>
+                        </select><br />
+                    </div></div>
+                <div className="row">
+                    <div className="col-25">
+                        <label>Start Time:</label>
+                    </div>
+                    <div className="col-75">
+                        <input type="time" placeholder="Enter Time" name='starttime' className="form-group mx-sm-3 mb-2" value={addnewelection.starttime} onChange={input} required /><br />
+                    </div></div>
+                <div className="row">
+                    <div className="col-25">
+                        <label>End Time:</label>
+                    </div>
+                    <div className="col-75">
+                        <input type="time" placeholder="Enter Time" name='endtime' className="form-group mx-sm-3 mb-2" value={addnewelection.endtime} onChange={input} required /><br />
+                        {/* <Button type="submit" onClick={getdata}>get</Button> */}
+                    </div></div>
+                <Button variant="success" onClick={adddata}>Submit</Button>
+            </form>
+            {showModal && (
+                    <div className='p-5'>
+                        <Table striped bordered hover variant='success'>
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Election Name</th>
+                                    <th>Election Date</th>
+                                    <th>Election Type</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {values.map((item, index) => (
+                                    <tr key={item.electionid}>
+                                        <td>{index + 1}</td>
+                                        <td>{item.electionname}</td>
+                                        <td>{item.electiondate}</td>
+                                        <td>{item.electiontype}</td>
+                                        <td>{item.starttime}</td>
+                                        <td>{item.endtime}</td>
+                                    </tr>
+                                ))}
+
+                            </tbody>
+                        </Table>
+                    </div>
+            )}
+        </div>
+        <br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <Footer />
+
+
 
 
     </>);

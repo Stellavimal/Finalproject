@@ -23,7 +23,7 @@ function Home() {
           Constitution per Article 324, and subsequently enacted Representation of the People Act.</p> 
         </Col>
       </Row>
-    </Container><br/><br/><br/><br/>
+    </Container><br/><br/>
     <footer style={{backgroundColor:"black"}}> <p style={{textAlign:"center",color:"white"}}>&copy;Copyright Election Commission of India</p></footer>
   </>
 }

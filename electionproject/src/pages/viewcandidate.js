@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Table } from 'react-bootstrap';
+import Footer from "./footer";
 
 const Viewcandidate = () => {
     const [values, setValue] = useState([])
@@ -19,7 +20,8 @@ const Viewcandidate = () => {
         fetchData();
     }, []);
 
-    return (<div className='p-5'>
+    return (<>
+    <div className='p-5'>
         <Table striped bordered hover variant='success'>
             <thead>
                 <tr>
@@ -56,7 +58,9 @@ const Viewcandidate = () => {
              
             </tbody>
         </Table>
-    </div>);
+    </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <Footer/>
+    </>);
 }
 
 export default Viewcandidate;

@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Button,Table} from "react-bootstrap";
+import Footer from "./footer";
 
 const Addparty = () => {
+    const [values, setValue] = useState([])
     const [candidates, setCandidates] = useState([]);
-    console.log("xcvb",candidates)
+    console.log("xcvb", candidates)
     const [selectedCandidate, setSelectedCandidate] = useState(null);
     console.log(selectedCandidate)
     const [partylogo, setPartylogo] = useState("");
-   
+    const [showModal, setShowModal] = useState(false); // pop up wondow
+    const toggleTable = () => {
+        setShowModal(!showModal); // Toggle the showTable state
+    };
 
     useEffect(() => {
         async function fetchData() {
@@ -19,6 +25,17 @@ const Addparty = () => {
             }
         }
 
+        async function getData() {
+            try {
+                const response = await axios.get('/api/addparty/');
+                setValue(response.data);
+                console.log(response.data)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        getData();
         fetchData();
     }, []);
 
@@ -29,11 +46,10 @@ const Addparty = () => {
         }
 
         const updateData = {
-        
+
             "partylogo": partylogo,
 
-            }
-    
+        }
 
         try {
             const response = await axios.patch(`/api/addcandidate/${selectedCandidate.cand_id}`, updateData);
@@ -45,9 +61,9 @@ const Addparty = () => {
 
     const handleCandidateChange = (event) => {
         const selectedCandId = event.target.value;
-        const selectedCand =  candidates.find((t) => t.cand_id === parseInt(selectedCandId));
+        const selectedCand = candidates.find((t) => t.cand_id === parseInt(selectedCandId));
         setSelectedCandidate(selectedCand);
-        console.log("drop",selectedCand)
+        console.log("drop", selectedCand)
     };
 
     const handlePartyLogoChange = (event) => {
@@ -55,29 +71,75 @@ const Addparty = () => {
     };
 
     return (
-        <div>
-            <label>Candidate Name:</label>
-            <select
-                name="nomineename"
-                onChange={handleCandidateChange}
-                required
-            >
-                <option value="">-- Select a Candidate --</option>
-                {candidates.map((candidate) => (
-                    <option key={candidate.cand_id} value={candidate.cand_id}>
-                        {candidate.nomineename}
-                    </option>
-                ))}
-            </select>
-            <br />
-            <label>Party Logo:</label>
-            <input
-                type="file"
-                name="partylogo"
-                onChange={handlePartyLogoChange}
-            />
-            <button onClick={updateRecord}>Submit</button>
-        </div>
+        <><br/>
+          <Button variant='primary' onClick={toggleTable}> <i className="fas fa-eye">  candidates</i></Button><br />
+            <div class="container">
+                <div className="row">
+                    <div className="col-25">
+                        <label>Candidate Name:</label>
+                    </div>
+                    <div className="col-75">
+                        <select
+                            name="nomineename"
+                            onChange={handleCandidateChange}
+                            required
+                        >
+                            <option value="">-- Select a Candidate --</option>
+                            {candidates.map((candidate) => (
+                                <option key={candidate.cand_id} value={candidate.cand_id}>
+                                    {candidate.nomineename}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div className="row">
+                    <div className="col-25">
+                        <label>Party Logo:</label></div>
+                    <div className="col-75">
+                        <input
+                            type="file"
+                            name="partylogo"
+                            onChange={handlePartyLogoChange}
+                        /></div>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                    <Button variant="success" onClick={updateRecord}>Submit</Button>
+                </div>
+            </div>
+            {showModal && (
+                <div className='p-5'>
+                    <Table striped bordered hover variant='success'>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Candidate Name</th>
+                                <th> Post Name</th>
+                                <th> Party Name</th>
+                                <th>Election Name </th>
+                                <th>Party Logo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {values.map((item, index) => (
+                                <tr key={item.electionid}>
+                                    <td>{index + 1}</td>
+                                    <td>{item.partynames.Name}</td>
+                                    <td>{item.partynames.PostName}</td>
+                                    <td>{item.partynames.partyname}</td>
+                                    <td>{item.partynames.election}</td>
+                                    <td><img src={item.partylogo} alt="Party Logo" width={85} height={85} /></td>
+                                </tr>
+                            ))}
+
+                        </tbody>
+                    </Table>
+                </div>
+            )}
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <Footer />
+        </>
     );
 };
 
