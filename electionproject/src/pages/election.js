@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { useState,useEffect } from 'react';
-import { Button, Modal,Table } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Button, Modal, Table } from 'react-bootstrap';
 import Footer from './footer'
 
 const Addelection = () => {
@@ -11,7 +11,7 @@ const Addelection = () => {
     const [values, setValue] = useState([])
     const toggleTable = () => {
         setShowModal(!showModal); // Toggle the showTable state
-      };
+    };
     const adddata = async () => {
         const response = await axios.post('/api/addelection/', addnewelection);
         setelection([...election, response.data])
@@ -55,8 +55,13 @@ const Addelection = () => {
     return (<>
         {!isValid && <p style={{ color: 'red' }}>Start time must be less than End time.</p>}
         {validationError && <p style={{ color: 'red' }}>{validationError}</p>}<br />
-        <Button variant='primary' onClick={toggleTable}> <i className="fas fa-eye">   Previous Elections</i></Button><br />
-        
+        <Button variant='primary' onClick={toggleTable}>
+            <span style={{ color: 'white' }}>
+                <i className="fas fa-eye" style={{ color:'burlywood' }}></i>
+                Previous Elections
+            </span>
+        </Button>
+
         <div class="container">
             <form style={{ textAlign: 'center' }} onSubmit={haandleSubmit}>
                 <div className="row">
@@ -103,33 +108,33 @@ const Addelection = () => {
                 <Button variant="success" onClick={adddata}>Submit</Button>
             </form>
             {showModal && (
-                    <div className='p-5'>
-                        <Table striped bordered hover variant='success'>
-                            <thead>
-                                <tr>
-                                    <th>S.No</th>
-                                    <th>Election Name</th>
-                                    <th>Election Date</th>
-                                    <th>Election Type</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
+                <div className='p-5'>
+                    <Table striped bordered hover variant='success'>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Election Name</th>
+                                <th>Election Date</th>
+                                <th>Election Type</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {values.map((item, index) => (
+                                <tr key={item.electionid}>
+                                    <td>{index + 1}</td>
+                                    <td>{item.electionname}</td>
+                                    <td>{item.electiondate}</td>
+                                    <td>{item.electiontype}</td>
+                                    <td>{item.starttime}</td>
+                                    <td>{item.endtime}</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {values.map((item, index) => (
-                                    <tr key={item.electionid}>
-                                        <td>{index + 1}</td>
-                                        <td>{item.electionname}</td>
-                                        <td>{item.electiondate}</td>
-                                        <td>{item.electiontype}</td>
-                                        <td>{item.starttime}</td>
-                                        <td>{item.endtime}</td>
-                                    </tr>
-                                ))}
+                            ))}
 
-                            </tbody>
-                        </Table>
-                    </div>
+                        </tbody>
+                    </Table>
+                </div>
             )}
         </div>
         <br /><br /><br /><br /><br /><br /><br /><br /><br />

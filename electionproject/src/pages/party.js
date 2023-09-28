@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Button,Table} from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import Footer from "./footer";
 
 const Addparty = () => {
@@ -71,8 +71,13 @@ const Addparty = () => {
     };
 
     return (
-        <><br/>
-          <Button variant='primary' onClick={toggleTable}> <i className="fas fa-eye">  candidates</i></Button><br />
+        <><br />
+            <Button variant='primary' onClick={toggleTable}>
+                <span style={{ color: 'white' }}>
+                    <i className="fas fa-eye" style={{ color: 'burlywood' }}></i>
+                    Candidates
+                </span>
+            </Button>
             <div class="container">
                 <div className="row">
                     <div className="col-25">

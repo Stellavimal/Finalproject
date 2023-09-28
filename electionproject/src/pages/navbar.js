@@ -28,7 +28,7 @@ const Navbar = () => {
 	  to="/contact" 
 	  activeStyle={{ color: 'black' }}
 	>
-		Login
+		<b>Login</b>
 	</NavLink>
 	{/*<NavLink
 	  to="/signin"
