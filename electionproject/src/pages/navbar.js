@@ -17,6 +17,7 @@ const Navbar = () => {
 	>
 		Home
 	</NavLink>
+	
 	<NavLink 
 	  to="/login"
 	  activeStyle={{ color: 'black' }}

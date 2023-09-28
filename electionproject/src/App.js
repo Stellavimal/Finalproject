@@ -7,24 +7,27 @@ import Navbar from './pages/navbar'
 import Addelection from './pages/election';
 import Candidate from './pages/candidate';
 import Addparty from './pages/party';
-// import Products from './pages/Products'
-// import Blog from './pages/Blog'
+import Viewcandidate from './pages/viewcandidate';
+import AdminNavbar from './pages/adminhome';
+import Viewvotersdetails from './pages/viewvoter';
 function App() {
   return (
     <>
-    <Addparty/>
-    {/* <Candidate/> */}
-    {/* <Addelection/> */}
-      {/* <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} /> */}
-        {/* <Route path="/contact" element={<Contact />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} /> */}
-      {/* </Routes> 
-    </BrowserRouter>    */}
+
+      {/*  */}
+      {/* <Candidate/>
+      {/*  */}
+      <BrowserRouter>
+        {/* <Navbar />  */}
+        <AdminNavbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/election" element={<Addelection />} />
+          <Route path="/viewcandidate" element={<Viewcandidate />} />
+          <Route path="/addparty" element={<Addparty />} />
+          <Route path="/viewvoter" element={<Viewvotersdetails />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

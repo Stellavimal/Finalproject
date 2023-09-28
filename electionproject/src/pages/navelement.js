@@ -25,11 +25,11 @@ display: flex;
 align-items: center;
 text-decoration: none;
 padding: 0 1rem;
-font-size: 2rem;
+font-size: 17px;
 height: 100%;
 cursor: pointer;
 &:hover {
-  color: black;
+  color: white;
 }
 `;
 

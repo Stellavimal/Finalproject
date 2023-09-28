@@ -1,28 +1,19 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
-
 const Addparty = () => {
-    const[Partyvalue,setPartyvalue]=useState([])
-    const [Newpartyvale, setNewpartyvale] = useState({
-        partynames: "",
-        electionname:""
-    });
-    const input = (event) => {
-        const { name, value } = event.target;
-        setNewpartyvale({ ...Newpartyvale, [name]: value });
-    };
-    const adddate=async()=>{
-        const response = await axios.post('/api/party/', Newpartyvale)
-        console.log("Add Date",response.data)
-        setPartyvalue([...Partyvalue, response.data])
-    }
+    const [candidates, setCandidates] = useState([]);
+    console.log("xcvb",candidates)
+    const [selectedCandidate, setSelectedCandidate] = useState(null);
+    console.log(selectedCandidate)
+    const [partylogo, setPartylogo] = useState("");
+   
+
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get('/api/party/');
-                setPartyvalue(response.data);
-                console.log("getdata",response.data)
+                const response = await axios.get('/api/addcandidate/');
+                setCandidates(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -31,40 +22,63 @@ const Addparty = () => {
         fetchData();
     }, []);
 
-    return (<>
-        <form>
-            <label><b>Candidate Name:</b></label>
+    const updateRecord = async () => {
+        if (!selectedCandidate) {
+            console.error('No candidate selected');
+            return;
+        }
+
+        const updateData = {
+        
+            "partylogo": partylogo,
+
+            }
+    
+
+        try {
+            const response = await axios.patch(`/api/addcandidate/${selectedCandidate.cand_id}`, updateData);
+            console.log('Candidate updated:', response.data);
+        } catch (error) {
+            console.error('Error updating candidate:', error);
+        }
+    };
+
+    const handleCandidateChange = (event) => {
+        const selectedCandId = event.target.value;
+        const selectedCand =  candidates.find((t) => t.cand_id === parseInt(selectedCandId));
+        setSelectedCandidate(selectedCand);
+        console.log("drop",selectedCand)
+    };
+
+    const handlePartyLogoChange = (event) => {
+        setPartylogo(event.target.value);
+    };
+
+    return (
+        <div>
+            <label>Candidate Name:</label>
             <select
-                // Use an empty string as the default value
-                onChange={input}
-                name="partynames"
+                name="nomineename"
+                onChange={handleCandidateChange}
                 required
             >
-                <option value="">-- Select an Candidate Name --</option>
-                {Partyvalue.map((item) => (
-                    <option key={item.id} value={item.id ? item.id.toString() : ''}>
-                        {item.partynames.Name}
+                <option value="">-- Select a Candidate --</option>
+                {candidates.map((candidate) => (
+                    <option key={candidate.cand_id} value={candidate.cand_id}>
+                        {candidate.nomineename}
                     </option>
                 ))}
-                </select><br/>
-                {Partyvalue.map((item) => (
-                    <>
-                     <label><b>Election Name:</b></label>
-                     <input type="text" name="electionname"  placeholder='Election Name..'  onChange={input} required /><br />
-                     <label><b>Party Name:</b></label>
-                     <input type="text" name="partyname"  placeholder='Election Name..'  onChange={input} required /><br />
-                     <label><b>Post Name:</b></label>
-                     <input type="text" name="postname"  placeholder='Election Name..'  onChange={input} required /><br />
-                     <label><b>Select PartyLogo :</b></label>
-                     <input type="file" name="party"  placeholder='Election Name..'  onChange={input} required /><br />
-                   
-                     </>
-                ))}
-            
-           
-            <button onClick={adddate}>Submit</button>
-        </form>
-    </>);
-}
+            </select>
+            <br />
+            <label>Party Logo:</label>
+            <input
+                type="file"
+                name="partylogo"
+                onChange={handlePartyLogoChange}
+            />
+            <button onClick={updateRecord}>Submit</button>
+        </div>
+    );
+};
 
 export default Addparty;
