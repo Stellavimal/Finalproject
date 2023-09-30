@@ -34,7 +34,7 @@ const Viewcandidate = () => {
                     <th>Phone Number</th>
                     <th>Address</th>
                     <th>Post Name</th>
-                    <th>Election Name</th>
+                    {/* <th>Election Name</th> */}
                     <th>Party Name</th>
                 </tr>
             </thead>
@@ -50,7 +50,7 @@ const Viewcandidate = () => {
                             <td>{item.phonenumber}</td>
                             <td>{item.address}</td>
                             <td>{item.postname}</td>
-                            <td>{item.election_name.Name}</td>
+                            {/* <td>{item.election_name.Name}</td> */}
                             <td>{item.partyname}</td>
                             
                         </tr>

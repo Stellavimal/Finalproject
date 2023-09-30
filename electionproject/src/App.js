@@ -11,6 +11,7 @@ import Viewcandidate from './pages/viewcandidate';
 import AdminNavbar from './pages/adminhome';
 import Viewvotersdetails from './pages/viewvoter';
 import Voters from './pages/voters';
+import Ballot from './ballot';
 function App() {
   // function PrivateRoute({children}){   // use can component also
   //   let value =true;
@@ -31,16 +32,18 @@ function App() {
       {/* <Candidate/>
       // {/*  */}
        <BrowserRouter> 
-        <Navbar />
-         {/* <AdminNavbar /> */}
+        {/* <Navbar />  */}
+          <AdminNavbar /> 
         <Routes>
           <Route path="/" element={ <Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/voters" element={<Voters/>} />
+          <Route path="/voters" element={<Voters />} />
           <Route path="/election" element={<Addelection />} />
           <Route path="/viewcandidate" element={<Viewcandidate />} />
           <Route path="/addparty" element={<Addparty />} />
           <Route path="/viewvoter" element={<Viewvotersdetails />} />
+          <Route path="/candidate" element={<Candidate />} />
+          <Route path="/ballot" element={<Ballot />} />
         </Routes>
       </BrowserRouter>
     </>
