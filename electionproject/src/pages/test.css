@@ -15,13 +15,17 @@
     color: #ffffff;
     animation: glow 2s infinite alternate;
 } 
-input[type=text],input[type=date],input[type=time],select, input[type=password],input[type=email],input[type=number]{
+input[type=text],input[type=date],input[type=time],select, input[type=password],input[type=email],input[type=number],input[type=file]{
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    resize: vertical;
+    background-color: transparent;
+    color: #011a1d;
+    outline: none;
+    outline-style: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid #eeeeee 1px;
+    padding: 3px 10px;
   }
   
   /* Style the label to display next to the inputs */
@@ -44,8 +48,10 @@ input[type=text],input[type=date],input[type=time],select, input[type=password],
   /* Style the container */
   .container {
     border-radius: 5px;
-    background-color: #f2f2f2;
+    background-image: linear-gradient(#b8e2f5,#796296);
     padding: 20px;
+    width: 3000px;;
+    background-size: cover;
   }
   
   /* Floating column for labels: 25% width */

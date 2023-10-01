@@ -12,6 +12,7 @@ import AdminNavbar from './pages/adminhome';
 import Viewvotersdetails from './pages/viewvoter';
 import Voters from './pages/voters';
 import Ballot from './ballot';
+import Partylogo from './pages/partylogo';
 function App() {
   // function PrivateRoute({children}){   // use can component also
   //   let value =true;
@@ -27,13 +28,13 @@ function App() {
   // }
   return (
     <>
-     
+     <Partylogo/>
       {/*  */}
       {/* <Candidate/>
       // {/*  */}
-       <BrowserRouter> 
+       {/* <BrowserRouter>  */}
         {/* <Navbar />  */}
-          <AdminNavbar /> 
+          {/* <AdminNavbar /> 
         <Routes>
           <Route path="/" element={ <Home />} />
           <Route path="/login" element={<Login />} />
@@ -45,7 +46,7 @@ function App() {
           <Route path="/candidate" element={<Candidate />} />
           <Route path="/ballot" element={<Ballot />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </>
   )
 }
