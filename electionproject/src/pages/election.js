@@ -25,7 +25,10 @@ const Addelection = () => {
             setValidationError('End Time is required.');
         } else {
             setValidationError('');
-            const response = await axios.post('/api/addelection/', addnewelection);
+            const response = await axios.post('/api/addelection/', addnewelection,{
+                headers:{
+                  "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2MzU4OTE2LCJpYXQiOjE2OTYzNTUzMTYsImp0aSI6ImY5NzkzNzRlYzhlMzQxMWNiZjAwZTcyNTRiNTU5ZWI0IiwidXNlcl9pZCI6MX0.BJvuyyyx3pLaFlpniHVBhDlOP9mb6RPdp4CrrNeTOKg`
+                }});
             setelection([...election, response.data])
             setaddelection({ electionname: "", electiondate: "", electiontype: "", starttime: "", endtime: "" })
             console.log("response:", response.data)

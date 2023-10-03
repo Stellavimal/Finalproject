@@ -1,112 +1,110 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
+import './test.css';
+import { Button } from 'react-bootstrap';
 
-const SignUp1 = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    roles: [], // Use an array to store selected roles
-  });
+function Register() {
+  const navigate = useNavigate();
 
+  const [data, setData] = useState({ name: '', email: '', role: '', password: '', confpassword: '' });
   const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    
-    // Handle checkboxes separately
-    if (type === 'checkbox') {
-      const updatedRoles = [...formData.roles];
-      if (checked) {
-        updatedRoles.push(value);
-      } else {
-        const index = updatedRoles.indexOf(value);
-        if (index !== -1) {
-          updatedRoles.splice(index, 1);
-        }
-      }
-      setFormData({ ...formData, roles: updatedRoles });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
 
-  const handleSubmit = async (e) => {
+
+  function validateForm() {
+    const newErrors = {};
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }
+
+  function submit(e) {
     e.preventDefault();
+    if (validateForm()) {
+      
 
-    try {
-      const response = await axios.post('/api/user/', formData);
-      console.log(response.data); 
-    } catch (error) {
-      if (error.response && error.response.data) {
-        setErrors(error.response.data); 
-      } else {
-        console.error(error);
-      }
+      const isVoters = data.role.toLowerCase() === 'voters';
+      const isCandidate = data.role.toLowerCase() === 'candidate';
+
+      axios.post('/api/user/', {
+        name: data.name,
+        role: data.role,
+        email: data.email,
+        password: data.password,
+        is_Candidate: isCandidate,
+        is_Voters: isVoters,
+      },{
+        headers:{
+          "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2MzU4OTE2LCJpYXQiOjE2OTYzNTUzMTYsImp0aSI6ImY5NzkzNzRlYzhlMzQxMWNiZjAwZTcyNTRiNTU5ZWI0IiwidXNlcl9pZCI6MX0.BJvuyyyx3pLaFlpniHVBhDlOP9mb6RPdp4CrrNeTOKg`
+        }
+      }).then((res) => {
+        console.log(res);
+        localStorage.setItem('token', res.data.access);
+        alert("Signin Succesfully")
+        navigate("/login");
+
+      }).catch((error) => {
+        console.error('Error registering user:', error);
+      });
     }
-  };
+    else alert('fill all fields')
+  }
+
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <label>
-          <input
-            type="checkbox"
-            name="roles"
-            value="staff"
-            checked={formData.roles.includes('staff')}
-            onChange={handleChange}
-          />
-          Staff
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="roles"
-            value="voters"
-            checked={formData.roles.includes('voters')}
-            onChange={handleChange}
-          />
-          Voters
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="roles"
-            value="candidate"
-            checked={formData.roles.includes('candidate')}
-            onChange={handleChange}
-          />
-          Candidate
-        </label>
+    <div class="container">
+      <form >
+        <div className="row">
+          <div className="col-25">
+            <label htmlFor="name">Username</label>
+          </div>
+          <div className="col-75">
+            <input type='text' className="form-input" name="name" onChange={(e) => setData({ ...data, name: e.target.value })} />
+          </div></div>
+        <div className="row">
+          <div className="col-25">
+            <label htmlFor="username">Email</label>
+          </div>
+          <div className="col-75">
+            <input className="form-input" name="email" onChange={(e) => setData({ ...data, email: e.target.value })} type='email' />
+          </div></div>
+        <div className="row">
+          <div className="col-25">
+            <label htmlFor="role">Role</label>
+          </div>
+          <div className="col-75">
+            <select name="role" onChange={(e) => setData({ ...data, role: e.target.value })} >
+              <option value="">...</option>
+              <option value="Voters">Voters</option>
+              <option value="candidate">Candidate</option>
+            </select><br />
+          </div></div>
+        <div className="row">
+          <div className="col-25">
+            <label htmlFor="password">Password</label>
+          </div>
+          <div className="col-75">
+            <input className="form-input" type="password" name="password" onChange={(e) => setData({ ...data, password: e.target.value })} />
+          </div></div>
+        <div className="row">
+          <div className="col-25">
+            <label htmlFor="confpassword">Confirm Password</label>
+          </div>
+          <div className="col-75">
+            <input className="form-input" type="password" name="confpassword" onChange={(e) => setData({ ...data, confpassword: e.target.value })} />
+          </div></div>
+        {errors.username && <div className="error">{errors.username}</div>}
+        {errors.role && <div className="error">{errors.role}</div>}
+        {errors.password && <div className="error">{errors.password}</div>}
+        {errors.confpassword && <div className="error">{errors.confpassword}</div>}
 
-        <button type="submit">Register</button>
-      </form>
-      {errors && <div className="error">{errors}</div>}
+        <p style={{ textAlign: "center" }}>Already have a account <Link to='/Login' className="reglink" style={{ color: 'black' }}>Login</Link></p>
+        <div style={{ textAlign: "center" }}> <Button onClick={submit} variant='success'>Register</Button></div>
+      </form >
     </div>
-  );
-};
 
-export default SignUp1;
+
+  );
+}
+
+export default Register;

@@ -13,7 +13,7 @@ import Ballot from './ballot';
 import Partylogo from './pages/partylogo';
 import BarChart from './pages/resultchar';
 import LoginAuth from './pages/loginauthendication';
-import SignUp1 from './pages/registerauth';
+import Register from './pages/registerauth';
 function App() {
   // function PrivateRoute({children}){   // use can component also
   //   let value =true;
@@ -29,27 +29,28 @@ function App() {
   // }
   return (
     <>
+    
 
       {/* <Partylogo/> */}
       {/* <Ballot /> */}
       {/* <BarChart/> */}
-    
+
       {/* <Candidate/>
       // {/*  */}
       <BrowserRouter>
-        {/* <Navbar />  */}
-        <AdminNavbar />
+        <Navbar />  
+      * <AdminNavbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/registerauth" element={<SignUp1/>} />
-          {/* <Route path="/voters" element={<Voters />} /> */}
+          <Route path="/registerauth" element={<Register/>} />
+          <Route path="/voters" element={<Voters />} />
           <Route path="/election" element={<Addelection />} />
           <Route path="/viewcandidate" element={<Viewcandidate />} />
           <Route path="/addparty" element={<Partylogo />} />
           <Route path="/viewvoter" element={<Viewvotersdetails />} />
           <Route path="/candidate" element={<Candidate />} />
           <Route path="/ballot" element={<Ballot />} />
-          
+          <Route path="/login" element={<LoginAuth />} />
         </Routes>
       </BrowserRouter>
     </>

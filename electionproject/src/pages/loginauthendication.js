@@ -52,11 +52,14 @@ function LoginAuth() {
 
                 if (userData.is_superuser) {
                     alert('Login Successfully!')
-                    navigate("/AdminPage");
+                    navigate("/election");
                 }
-                else if (userData.is_staff) {
+                else if (userData.is_Candidate) {
                     alert('Login Successfully!')
-                    navigate("/VisitorNavbar");
+                    navigate("/candidate");
+                } else if (userData.is_Voters) {
+                    alert('Login Successfully!')
+                    navigate("/voters");
                 }
 
                 else {
