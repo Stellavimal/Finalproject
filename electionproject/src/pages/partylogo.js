@@ -4,7 +4,7 @@ import { Button, Table } from "react-bootstrap";
 import Footer from "./footer";
 
 const Partylogo = () => {
-    const [newvalue, setNewvalue] = useState({ election: "", PostName: "", partyname: "", electiondate: "" })
+
     const [values, setValue] = useState([])
     console.log("partyvalue", values)
     const [candidates, setCandidates] = useState([]);
@@ -13,6 +13,10 @@ const Partylogo = () => {
     // console.log("dropvalue", selectedCandidate)
     const [partylogo, setPartylogo] = useState("");
     const [selectedNominee, setSelectedNominee] = useState("");
+    const [partyname, setPartyname] = useState("");
+    const [election, setElection] = useState("");
+    const [electiondate, setElectionDate] = useState("");
+    const[postnames,setPostnames]=useState("")
 
     useEffect(() => {
         async function fetchData() {
@@ -38,29 +42,8 @@ const Partylogo = () => {
         fetchData();
     }, []);
 
-    const handleAdd = async () => {
-        const formData = new FormData();
-
-        // Append the file to the FormData object
-        formData.append("partylogo", partylogo);
-      
-        // Append other form data fields
-        formData.append("partynames[Name]", selectedNominee);
-        formData.append("partynames[PostName]", newvalue.PostName);
-        formData.append("partynames[partyname]", newvalue.partyname);
-        formData.append("partynames[election]", newvalue.election);
-        formData.append("partynames[electiondate]", newvalue.electiondate);
-      
-        try {
-          const response = await axios.post('/api/addparty/', formData);
-          console.log('Data sent successfully:', response.data);
-        } catch (error) {
-          console.error('Error sending data:', error);
-        }
-    }
-
     const handlePartyLogoChange = (event) => {
-        const file = event.target.files[0]; // Get the first file from the input
+        const file = event.target.files; // Get the first file from the input
         setPartylogo(file);
     };
     const handleNomineeChange = (e) => {
@@ -103,11 +86,30 @@ const Partylogo = () => {
         }
         return "";
     };
-
+    console.log("asdff",getDate())
+    const handleAdd = async () => {
+        try {
+            const response = await axios.post("/api/addparty/", {
+              partylogo:partylogo ,
+              partynames: {
+                Name:selectedNominee,
+                PostName:getPostname(),
+                partyname: getPartname(), // Use the partyname state variable here
+                election: getElectionName(),   // Use the election state variable here
+                electiondate:getDate(), // Use the electiondate state variable here
+              },
+            });
+        
+            console.log("Data sent successfully:", response.data);
+          } catch (error) {
+            console.error("Error sending data:", error);
+          }
+    }
+  
     return (
 
         <div class="container">
-            <form encType="multipart/form-data">
+            <form >
                 <div className="row">
                     <div className="col-25">
                         <label><b>Candidate Name:</b></label>
@@ -127,35 +129,36 @@ const Partylogo = () => {
                         </select>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-25">
-                        <label><b>Election Name:</b></label>
-                    </div>
-                    <div className="col-75">
-                        <input type="text" name="election" value={getElectionName()} onChange={(e) => setNewvalue({ ...newvalue, [e.target.name]: e.target.value })} />
-                    </div></div>
+
                 <div className="row">
                     <div className="col-25">
                         <label><b>Post Name:</b></label>
                     </div>
                     <div className="col-75">
-                        <input type="text" name="PostName" value={getPostname()} onChange={(e) => setNewvalue({ ...newvalue, [e.target.name]: e.target.value })} />
+                        <input type="text" name="PostName" value={getPostname()} onChange={(e) => setPostnames( e.target.value )} />
                     </div>
                     <div className="row">
                         <div className="col-25">
                             <label><b>Party Name:</b></label>
                         </div>
                         <div className="col-75">
-                            <input type="text" name="partyname" value={getPartname()} onChange={(e) => setNewvalue({ ...newvalue, [e.target.name]: e.target.value })} />
+                            <input type="text" name="partyname" value={getPartname()} onChange={(e) => setPartyname(e.target.value)} />
                         </div>
                     </div>
+                    <div className="row">
+                        <div className="col-25">
+                            <label><b>Election Name:</b></label>
+                        </div>
+                        <div className="col-75">
+                            <input type="text" name="election" value={getElectionName()} onChange={(e) => setElection(e.target.value)} />
+                        </div></div>
                     <div className="row">
                         <div className="col-25">
                             <label><b>Election Date:</b></label>
                         </div>
                         <div className="col-75">
 
-                            <input type="text" name="electiondate" value={getDate()} onChange={(e) => setNewvalue({ ...newvalue, [e.target.name]: e.target.value })} />
+                            <input type="text" name="electiondate" value={getDate()} onChange={(e) => setElectionDate(e.target.value)} />
                         </div>
                     </div>
 

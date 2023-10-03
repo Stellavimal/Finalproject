@@ -13,11 +13,24 @@ const Addelection = () => {
         setShowModal(!showModal); // Toggle the showTable state
     };
     const adddata = async () => {
-        const response = await axios.post('/api/addelection/', addnewelection);
-        setelection([...election, response.data])
-        setaddelection({ electionname: "", electiondate: "", electiontype: "", starttime: "", endtime: "" })
-        console.log("response:", response.data)
-        alert("New Election added")
+        if (!addnewelection.electionname) {
+            setValidationError('Election Name is required.');
+        } else if (new Date(addnewelection.electiondate) < new Date()) {
+            setValidationError('Election Date cannot be in the past.');
+        } else if (!addnewelection.electiontype) {
+            setValidationError('Election Type is required.');
+        } else if (!addnewelection.starttime) {
+            setValidationError('Start Time is required.');
+        } else if (!addnewelection.endtime) {
+            setValidationError('End Time is required.');
+        } else {
+            setValidationError('');
+            const response = await axios.post('/api/addelection/', addnewelection);
+            setelection([...election, response.data])
+            setaddelection({ electionname: "", electiondate: "", electiontype: "", starttime: "", endtime: "" })
+            console.log("response:", response.data)
+            alert("New Election added")
+        }
     }
     useEffect(() => {
         async function fetchData() {
@@ -57,7 +70,7 @@ const Addelection = () => {
         {validationError && <p style={{ color: 'red' }}>{validationError}</p>}<br />
         <Button variant='primary' onClick={toggleTable}>
             <span style={{ color: 'white' }}>
-                <i className="fas fa-eye" style={{ color:'burlywood' }}></i>
+                <i className="fas fa-eye" style={{ color: 'burlywood' }}></i>
                 Previous Elections
             </span>
         </Button>
@@ -105,6 +118,8 @@ const Addelection = () => {
                         <input type="time" placeholder="Enter Time" name='endtime' className="form-group mx-sm-3 mb-2" value={addnewelection.endtime} onChange={input} required /><br />
                         {/* <Button type="submit" onClick={getdata}>get</Button> */}
                     </div></div>
+                {validationError && <p style={{ color: 'red' }}>{validationError}</p>}
+
                 <Button variant="success" onClick={adddata}>Submit</Button>
             </form>
             {showModal && (

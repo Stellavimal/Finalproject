@@ -1,8 +1,6 @@
 import './App.css'
-// import Header from './components/Header'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './pages/home'
-import Login from './pages/login'
 import Navbar from './pages/navbar'
 import Addelection from './pages/election';
 import Candidate from './pages/candidate';
@@ -13,10 +11,13 @@ import Viewvotersdetails from './pages/viewvoter';
 import Voters from './pages/voters';
 import Ballot from './ballot';
 import Partylogo from './pages/partylogo';
+import BarChart from './pages/resultchar';
+import LoginAuth from './pages/loginauthendication';
+import SignUp1 from './pages/registerauth';
 function App() {
   // function PrivateRoute({children}){   // use can component also
   //   let value =true;
-  
+
   //   if (!value)
   //   {
   //     return <Navigate to='/taskpage/login' />
@@ -28,25 +29,29 @@ function App() {
   // }
   return (
     <>
-     <Partylogo/>
-      {/*  */}
+
+      {/* <Partylogo/> */}
+      {/* <Ballot /> */}
+      {/* <BarChart/> */}
+    
       {/* <Candidate/>
       // {/*  */}
-       {/* <BrowserRouter>  */}
+      <BrowserRouter>
         {/* <Navbar />  */}
-          {/* <AdminNavbar /> 
+        <AdminNavbar />
         <Routes>
-          <Route path="/" element={ <Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/voters" element={<Voters />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/registerauth" element={<SignUp1/>} />
+          {/* <Route path="/voters" element={<Voters />} /> */}
           <Route path="/election" element={<Addelection />} />
           <Route path="/viewcandidate" element={<Viewcandidate />} />
-          <Route path="/addparty" element={<Addparty />} />
+          <Route path="/addparty" element={<Partylogo />} />
           <Route path="/viewvoter" element={<Viewvotersdetails />} />
           <Route path="/candidate" element={<Candidate />} />
           <Route path="/ballot" element={<Ballot />} />
+          
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
     </>
   )
 }

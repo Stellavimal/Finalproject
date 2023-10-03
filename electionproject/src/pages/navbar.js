@@ -19,13 +19,13 @@ const Navbar = () => {
 	</NavLink>
 	
 	<NavLink 
-	  to="/login"
+	  to="/registerauth"
 	  activeStyle={{ color: 'black' }}
 	>
 		<b>New Voters</b>
 	</NavLink>
 	 <NavLink 
-	  to="/contact" 
+	  to="/login" 
 	  activeStyle={{ color: 'black' }}
 	>
 		<b>Login</b>
