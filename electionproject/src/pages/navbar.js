@@ -1,7 +1,7 @@
 import {Nav,NavLogo,NavLink,Bars,NavMenu,NavBtn,NavBtnLink,}from "./navelement";
 import './test.css'
 
-const Navbar = () => {
+const Navbars = () => {
     return (
         <>
 <Nav>
@@ -16,13 +16,6 @@ const Navbar = () => {
 	  activeStyle={{ color:'black' }}
 	>
 		<b>Home</b>
-	</NavLink>
-	
-	<NavLink 
-	  to="/registerauth"
-	  activeStyle={{ color: 'black' }}
-	>
-		<b>New Voters</b>
 	</NavLink>
 	 <NavLink 
 	  to="/login" 
@@ -44,4 +37,4 @@ const Navbar = () => {
 </>
  );
 };
-export default Navbar;
+export default Navbars;

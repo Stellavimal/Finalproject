@@ -2,8 +2,10 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import {Button} from "react-bootstrap";
-import './test.css'
+import { Button, Navbar } from "react-bootstrap";
+import './test.css';
+import Navbars from "./navbar";
+import Footer from "./footer";
 
 function LoginAuth() {
     const [data, setData] = useState({ email: "", password: "", });
@@ -57,7 +59,7 @@ function LoginAuth() {
                 else if (userData.is_Candidate) {
                     alert('Login Successfully!')
                     navigate("/candidate");
-                    
+
                 } else if (userData.is_Voters) {
                     alert('Login Successfully!')
                     navigate("/voters");
@@ -79,12 +81,13 @@ function LoginAuth() {
 
     return (
         <>
+            <Navbars />
             <div class="container">
 
                 <form>
                     <div className="row">
                         <div className="col-25">
-                            <label className='textbox'>Email </label>
+                            <label className='textbox'><b>Email</b> </label>
                         </div>
                         <div className="col-75">
                             <input type="text" style={{ color: 'black' }} name="email" onChange={handleInputChange} value={data.email} />
@@ -93,16 +96,17 @@ function LoginAuth() {
                     </div>
                     <div className="row">
                         <div className="col-25">
-                            <label className="textbox">Password </label>
+                            <label className="textbox"><b>Password</b> </label>
                         </div>
                         <div className="col-75">
                             <input type="password" style={{ color: 'black' }} name="password" onChange={handleInputChange} value={data.password} />
                             <span className="error">{errors.password}</span><br />
                         </div></div>
-                    <p>don't have a account <Link to='/register' className="reglink">SignUp</Link></p>
-                </form>
-                <Button onClick={submit}  variant="success">Login</Button>
-            </div>
+                    <p style={{ textAlign: "center" }}>Don't have a account <Link to='/registerauth' className="reglink" style={{ color: "black" }}>SignUp</Link></p>
+                </form><div style={{ textAlign: "center" }}>
+                    <Button onClick={submit} variant="success" >Login</Button></div>
+            </div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <Footer />
         </>
     );
 };

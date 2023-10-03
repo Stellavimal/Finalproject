@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './test.css';
 import { Button } from 'react-bootstrap';
+import Navbars from './navbar';
+import Footer from './footer';
 
 function Register() {
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ function Register() {
   function submit(e) {
     e.preventDefault();
     if (validateForm()) {
-      
+
 
       const isVoters = data.role.toLowerCase() === 'voters';
       const isCandidate = data.role.toLowerCase() === 'candidate';
@@ -33,9 +35,9 @@ function Register() {
         password: data.password,
         is_Candidate: isCandidate,
         is_Voters: isVoters,
-      },{
-        headers:{
-          "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2MzU4OTE2LCJpYXQiOjE2OTYzNTUzMTYsImp0aSI6ImY5NzkzNzRlYzhlMzQxMWNiZjAwZTcyNTRiNTU5ZWI0IiwidXNlcl9pZCI6MX0.BJvuyyyx3pLaFlpniHVBhDlOP9mb6RPdp4CrrNeTOKg`
+      }, {
+        headers: {
+          "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2MzU4OTE2LCJpYXQiOjE2OTYzNTUzMTYsImp0aSI6ImY5NzkzNzRlYzhlMzQxMWNiZjAwZTcyNTRiNTU5ZWI0IiwidXNlcl9pZCI6MX0.BJvuyyyx3pLaFlpniHVBhDlOP9mb6RPdp4CrrNeTOKg`
         }
       }).then((res) => {
         console.log(res);
@@ -51,7 +53,9 @@ function Register() {
   }
 
 
-  return (
+  return (<>
+    <Navbars />
+
     <div class="container">
       <form >
         <div className="row">
@@ -98,11 +102,12 @@ function Register() {
         {errors.password && <div className="error">{errors.password}</div>}
         {errors.confpassword && <div className="error">{errors.confpassword}</div>}
 
-        <p style={{ textAlign: "center" }}>Already have a account <Link to='/Login' className="reglink" style={{ color: 'black' }}>Login</Link></p>
+        <p style={{ textAlign: "center" }}>Already have a account <Link to='/login' className="reglink" style={{ color: 'black' }}>Login</Link></p>
         <div style={{ textAlign: "center" }}> <Button onClick={submit} variant='success'>Register</Button></div>
       </form >
-    </div>
-
+    </div><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <Footer />
+  </>
 
   );
 }

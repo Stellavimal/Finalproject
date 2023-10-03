@@ -39,10 +39,16 @@ const AdminNavbar = () => {
 		Voters Details
 	</NavLink>
     <NavLink
-	  to="/signin"
+	  to="/result"
 	  activeStyle={{ color: 'black' }}
 	>
 		Election Result
+	</NavLink>
+	<NavLink
+	  to="/"
+	  activeStyle={{ color: 'black' }}
+	>
+		Logout
 	</NavLink>
 </NavMenu>
 </Nav> 
