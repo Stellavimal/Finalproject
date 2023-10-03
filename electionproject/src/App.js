@@ -39,7 +39,7 @@ function App() {
       // {/*  */}
       <BrowserRouter>
         <Navbar />  
-      * <AdminNavbar />
+      
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registerauth" element={<Register/>} />

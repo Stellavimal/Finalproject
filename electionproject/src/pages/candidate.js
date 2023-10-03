@@ -26,7 +26,11 @@ const Candidate = () => {
             ...Newcandidatevalue,
             election_name: electionId, // Ensure it's an integer
         };
-        const response = await axios.post('/api/addcandidate/', newCandidate)
+        const response = await axios.post('/api/addcandidate/', newCandidate,{
+            headers:{
+
+                Authorization: `JWT ${localStorage.getItem('token')}`
+            }})
         setCandidatevalue([...Candidatevalue, response.data])
         setNewcandidatevalue({
             nomineename: "",
@@ -52,7 +56,11 @@ const Candidate = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get('/api/addelection/');
+                const response = await axios.get('/api/addelection/',{
+                    headers:{
+        
+                        Authorization: `JWT ${localStorage.getItem('token')}`
+            }});
                 setElection(response.data);
                 console.log(response.data)
             } catch (error) {

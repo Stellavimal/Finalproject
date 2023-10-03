@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Chart from "react-apexcharts";
+import AdminNavbar from "./adminhome";
 
 const BarChart = ({ agevalue = [] }) => {
     const [selectedNominee, setSelectedNominee] = useState("");
@@ -32,7 +33,7 @@ const BarChart = ({ agevalue = [] }) => {
         setFilteredPartyValue(filteredPartyValue);
         setShowInfo(true);
     };
-   
+
     // Use the function to get the maximum count
     const maxCount = findMaxCount();
 
@@ -58,42 +59,45 @@ const BarChart = ({ agevalue = [] }) => {
     };
 
     return (
-        <div className="container">
-            <form style={{ textAlign: 'center' }}>
-                <div className="row">
-                    <div className="col-25">
-                        <label for="fname"><b>Election Name</b></label>
+        <>
+        <AdminNavbar/>
+            <div className="container">
+                <form style={{ textAlign: 'center' }}>
+                    <div className="row">
+                        <div className="col-25">
+                            <label for="fname"><b>Election Name</b></label>
+                        </div>
+                        <div className="col-75">
+                            <select
+                                name="election"
+                                required
+                                onChange={handleNomineeChange}
+                            >
+                                <option value="">-- Select an Election --</option>
+                                {values.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.candidates.Election}
+                                    </option>
+                                ))}
+                            </select><br />
+                        </div>
                     </div>
-                    <div className="col-75">
-                        <select
-                            name="election"
-                            required
-                            onChange={handleNomineeChange}
-                        >
-                            <option value="">-- Select an Election --</option>
-                            {values.map((item) => (
-                                <option key={item.id} value={item.id}>
-                                    {item.candidates.Election}
-                                </option>
-                            ))}
-                        </select><br />
-                    </div>
-                </div>
-            </form>
-            {showInfo && (
-                <Chart
-                    options={chartData.options}
-                    series={chartData.series}
-                    type="bar"
-                    height={400}
-                    width={500}
-                />
-            )}
+                </form>
+                {showInfo && (
+                    <Chart
+                        options={chartData.options}
+                        series={chartData.series}
+                        type="bar"
+                        height={400}
+                        width={500}
+                    />
+                )}
 
-            <div>
-                <h3>Maximum Count: {maxCount}</h3>
+                <div>
+                    <h3>Maximum Count: {maxCount}</h3>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

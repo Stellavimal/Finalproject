@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
 import Footer from './footer'
+import AdminNavbar from './adminhome';
 
 const Addelection = () => {
     const [election, setelection] = useState([])
@@ -25,10 +26,11 @@ const Addelection = () => {
             setValidationError('End Time is required.');
         } else {
             setValidationError('');
-            const response = await axios.post('/api/addelection/', addnewelection,{
-                headers:{
-                  "Authorization" : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2MzU4OTE2LCJpYXQiOjE2OTYzNTUzMTYsImp0aSI6ImY5NzkzNzRlYzhlMzQxMWNiZjAwZTcyNTRiNTU5ZWI0IiwidXNlcl9pZCI6MX0.BJvuyyyx3pLaFlpniHVBhDlOP9mb6RPdp4CrrNeTOKg`
-                }});
+            const response = await axios.post('/api/addelection/', addnewelection, {
+                headers: {
+                    "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2MzU4OTE2LCJpYXQiOjE2OTYzNTUzMTYsImp0aSI6ImY5NzkzNzRlYzhlMzQxMWNiZjAwZTcyNTRiNTU5ZWI0IiwidXNlcl9pZCI6MX0.BJvuyyyx3pLaFlpniHVBhDlOP9mb6RPdp4CrrNeTOKg`
+                }
+            });
             setelection([...election, response.data])
             setaddelection({ electionname: "", electiondate: "", electiontype: "", starttime: "", endtime: "" })
             console.log("response:", response.data)
@@ -69,6 +71,7 @@ const Addelection = () => {
     const isValid = isStartTimeLessThanEndTime();
 
     return (<>
+        <AdminNavbar />
         {!isValid && <p style={{ color: 'red' }}>Start time must be less than End time.</p>}
         {validationError && <p style={{ color: 'red' }}>{validationError}</p>}<br />
         <Button variant='primary' onClick={toggleTable}>
