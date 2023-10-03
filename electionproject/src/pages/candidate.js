@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap'
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
+import Canavbars from './candidatenav.js';
+import Footer from './footer';
+
 
 const Candidate = () => {
     const [dobvalue, setDob] = useState('')
@@ -26,11 +29,7 @@ const Candidate = () => {
             ...Newcandidatevalue,
             election_name: electionId, // Ensure it's an integer
         };
-        const response = await axios.post('/api/addcandidate/', newCandidate,{
-            headers:{
-
-                Authorization: `JWT ${localStorage.getItem('token')}`
-            }})
+        const response = await axios.post('/api/addcandidate/', newCandidate)
         setCandidatevalue([...Candidatevalue, response.data])
         setNewcandidatevalue({
             nomineename: "",
@@ -56,11 +55,12 @@ const Candidate = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get('/api/addelection/',{
-                    headers:{
-        
+                const response = await axios.get('/api/addelection/', {
+                    headers: {
+
                         Authorization: `JWT ${localStorage.getItem('token')}`
-            }});
+                    }
+                });
                 setElection(response.data);
                 console.log(response.data)
             } catch (error) {
@@ -145,6 +145,7 @@ const Candidate = () => {
 
 
     return (<>
+        <Canavbars />
         <h2 style={{ textAlign: 'center' }}>Nomination Form </h2>
         <div class="container">
             <form onSubmit={handleSubmit}>
@@ -253,11 +254,11 @@ const Candidate = () => {
                     </div></div>
 
             </form>
-        </div>
-        <div style={{ textAlign: "center" }}><label><input type="checkbox" required /> Agree</label>
-            <label><input type="checkbox" required /> Disagree</label><br />
-            <Button variant='success' onClick={handleAdd} >Submit</Button></div>
 
+            <div style={{ textAlign: "center" }}>
+                <Button variant='success' onClick={handleAdd} >Submit</Button></div>
+        </div>
+        <Footer />
     </>
     );
 }

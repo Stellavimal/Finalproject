@@ -58,7 +58,7 @@ function LoginAuth() {
                 }
                 else if (userData.is_Candidate) {
                     alert('Login Successfully!')
-                    navigate("/candidate");
+                    navigate("/candidatehome");
 
                 } else if (userData.is_Voters) {
                     alert('Login Successfully!')

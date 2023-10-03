@@ -12,6 +12,7 @@ import Partylogo from './pages/partylogo';
 import BarChart from './pages/resultchar';
 import LoginAuth from './pages/loginauthendication';
 import Register from './pages/registerauth';
+import CandidateHome from './pages/candidatehome'
 function App() {
   return (
     <>
@@ -28,6 +29,7 @@ function App() {
           <Route path="/ballot" element={<Ballot />} />
           <Route path="/login" element={<LoginAuth />} />
           <Route path="/result" element={<BarChart />} />
+          <Route path="/candidatehome" element={<CandidateHome />} />
         </Routes>
       </BrowserRouter>
     </>
